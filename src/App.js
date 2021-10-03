@@ -4,15 +4,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from "./components/Home/Home";
 import Chart from "./components/Chart/Chart";
-import Todos from "./components/Todos/Todos";
 
-import SingleTodo from "./components/SIngleTodo/SingleTodo";
 import Navigation from "./components/Navigation.js/Navigation";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Todos from "./components/Todos/Todos";
+import TodoDetails from "./components/TodoDetails/TodoDetails";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
-    <div className="my-5 text-center">
+    <div className="text-center">
       <Router>
         <Navigation />
         <Switch>
@@ -28,12 +29,13 @@ function App() {
           <Route exact path="/chart">
             <Chart />
           </Route>
-          <Route exact path="/todos">
-            <Todos />
+          <Route path="/todos">
+            <Todos></Todos>
           </Route>
-          <Route path="/todos/:id">
-            <SingleTodo />
+          <Route path="/todo/:todoID">
+            <TodoDetails></TodoDetails>
           </Route>
+
           <Route exact path="*">
             <NotFound />
           </Route>

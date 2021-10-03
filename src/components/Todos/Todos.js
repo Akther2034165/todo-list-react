@@ -1,42 +1,27 @@
-import Button from "@restart/ui/esm/Button";
-import React, { useEffect, useState } from "react";
-import { Card, Container } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-
+import React, { createContext, useEffect, useState } from "react";
+import { Container, Row } from "react-bootstrap";
+import Todo from "../Todo/Todo";
+export const DoneContext = createContext("do it");
 const Todos = () => {
   const [todos, setTodos] = useState([]);
+  const status = "done it first";
   useEffect(() => {
-    fetch("/todos.json")
+    fetch("https://jsonplaceholder.typicode.com/todos")
       .then((res) => res.json())
       .then((data) => setTodos(data));
   }, []);
   return (
-    <div>
-      <h1>Todos are here{todos.length}</h1>
-      {todos.map((todo) => (
-        <Container>
-          <Card>
-            <Card.Header>{todo?.title}</Card.Header>
-            <Card.Body>
-              <Card.Title>{todo?.id}</Card.Title>
-              <Card.Text>
-                {todo.completed === true ? "True" : "False"}
-              </Card.Text>
-              <NavLink
-                to={`/todos/${todos?.id}`}
-                activeStyle={{
-                  fontWeight: "bold",
-                  color: "red",
-                  textDecoration: "none",
-                }}
-              >
-                <Button>Details</Button>
-              </NavLink>
-            </Card.Body>
-          </Card>
+    <DoneContext.Provider value={status}>
+      <div>
+        <Container className="my-5">
+          <Row xs={1} md={2} lg={3} className="g-4 ps-auto">
+            {todos.map((todo) => (
+              <Todo todo={todo}></Todo>
+            ))}
+          </Row>
         </Container>
-      ))}
-    </div>
+      </div>
+    </DoneContext.Provider>
   );
 };
 
